@@ -2,9 +2,13 @@ import React from 'react';
 import { AppBar, Toolbar } from 'react95';
 import Menu from './Menu';
 
-const Nav: React.FC = () => {
+type NavProps = {
+  style?: React.CSSProperties;
+};
+
+const Nav: React.FC<NavProps> = () => {
   return (
-    <AppBar>
+    <AppBar style={{ position: 'fixed', bottom: 0, top: 'auto' }}>
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <Menu />
       </Toolbar>

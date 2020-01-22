@@ -15,12 +15,12 @@ const App: React.FC = () => {
   return (
     <ConnectedRouter history={history}>
       <BrowserView>
-        <Nav />
         {/* tslint:disable jsx-no-lambda */}
         <Switch>
           <Route exact={true} path="/" render={() => <Home />} />
           <Route render={() => <NoMatch />} />
         </Switch>
+        <Nav />
       </BrowserView>
       <MobileView>
         <Route path="/" render={() => <Mobile />} />
