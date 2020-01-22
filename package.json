@@ -5,6 +5,7 @@
   "homepage": "https://TODO.replace.here",
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
+    "@react95/core": "^2.4.5",
     "@rehooks/component-size": "^1.0.3",
     "@use-hooks/image-size": "^1.0.5",
     "connected-react-router": "6.6.1",
