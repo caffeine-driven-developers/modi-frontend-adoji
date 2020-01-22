@@ -18,11 +18,23 @@ const Menu: React.FC = () => {
       {open && (
         <List
           horizontalAlign="left"
-          verticalAlign="bottom"
+          verticalAlign="top"
           open={open}
           onClick={handleClose}
         >
-          <ListItem>👨‍💻 Profile</ListItem>
+          <ListItem>
+            <Icon
+              className="dd"
+              style={{
+                display: 'inline-block',
+                marginTop: 11,
+              }}
+              name="explore"
+              height={23}
+              width={23}
+            />{' '}
+            Hello
+          </ListItem>
           <ListItem>📁 My account</ListItem>
           <Divider />
           <ListItem disabled>🔙 Logout</ListItem>
