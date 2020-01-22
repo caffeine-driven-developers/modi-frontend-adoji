@@ -3,10 +3,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Button } from 'react95';
 
-type WrapperProps = {
-  inputColor?: string;
-};
-const Wrapper = styled.div<WrapperProps>`
+const Wrapper = styled.div`
   padding: 4em;
   border: 1px solid black;
   background-color: rgb(85, 170, 170);
@@ -14,9 +11,9 @@ const Wrapper = styled.div<WrapperProps>`
 
 const Home: React.FC = props => {
   return (
-    <Wrapper inputColor="blue">
+    <Wrapper className="container">
       <Helmet>
-        <title>olaf template</title>
+        <title>modi95</title>
       </Helmet>
       This is home template!
       <Button>dd</Button>

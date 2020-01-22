@@ -1,4 +1,5 @@
 import 'App.css';
+import 'bootstrap4.grid.css';
 import { ConnectedRouter } from 'connected-react-router';
 import Nav from 'layouts/Nav';
 import Home from 'pages';
