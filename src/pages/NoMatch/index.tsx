@@ -11,7 +11,7 @@ export default () => {
         <button>Back Home</button>
       </div>
       {/* tslint:disable-next-line */}
-      <style jsx>{`
+      {/* <style jsx>{`
         .wrapper {
           margin-top: 10vh;
           text-align: center;
@@ -23,7 +23,7 @@ export default () => {
         .back-home-btn {
           margin-top: 2vh;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };
