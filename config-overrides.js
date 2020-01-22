@@ -26,7 +26,8 @@ module.exports = override(
   addWebpackAlias({
     'react-dom': '@hot-loader/react-dom',
   }),
-  ...addBabelPlugins('styled-jsx/babel'),
+  ...addBabelPlugins('babel-plugin-styled-components'),
+  // ...addBabelPlugins('styled-jsx/babel'),
   myFixBabelImports(
     'import',
     {
