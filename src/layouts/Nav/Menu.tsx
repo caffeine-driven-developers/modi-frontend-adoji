@@ -1,8 +1,18 @@
 import React from 'react';
 import { List, ListItem, Divider, Button } from 'react95';
 import { Icon } from '@react95/core';
+import styled from 'styled-components';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
-const Menu: React.FC = () => {
+type MenuDispatchProps = {
+  push: typeof push;
+};
+type MenuProps = MenuDispatchProps;
+
+const Menu: React.FC<MenuProps> = props => {
+  const { push } = props;
   const [open, setOpen] = React.useState(false);
 
   function handleClick() {
@@ -13,8 +23,20 @@ const Menu: React.FC = () => {
     setOpen(false);
   }
 
+  function handleMenu(menu: string) {
+    switch (menu) {
+      case 'search': {
+        push('/search');
+        break;
+      }
+      default: {
+        console.error(`${menu} is not defined`);
+      }
+    }
+  }
+
   return (
-    <div style={{ position: 'relative', display: 'inline-block' }}>
+    <Wrapper>
       {open && (
         <List
           horizontalAlign="left"
@@ -22,22 +44,24 @@ const Menu: React.FC = () => {
           open={open}
           onClick={handleClose}
         >
-          <ListItem>
+          <ListItem onClick={() => handleMenu('search')}>
+            <Icon className="menu-icon" name="explore" height={23} width={23} />
+            Search
+          </ListItem>
+          <ListItem disabled>
+            <Icon className="menu-icon" name="user" height={23} width={23} />
+            Profile
+          </ListItem>
+          <Divider />
+          <ListItem disabled>
             <Icon
-              className="dd"
-              style={{
-                display: 'inline-block',
-                marginTop: 11,
-              }}
-              name="explore"
+              className="menu-icon"
+              name="power_off"
               height={23}
               width={23}
-            />{' '}
-            Hello
+            />
+            Logout
           </ListItem>
-          <ListItem>📁 My account</ListItem>
-          <Divider />
-          <ListItem disabled>🔙 Logout</ListItem>
         </List>
       )}
 
@@ -45,8 +69,29 @@ const Menu: React.FC = () => {
         <Icon name="logo" style={{ marginRight: '4px' }} />
         Start
       </Button>
-    </div>
+    </Wrapper>
   );
 };
 
-export default Menu;
+const Wrapper = styled.div`
+  position: relative;
+  display: inline-block;
+
+  ul {
+    top: -17.2px;
+    left: -0.6px;
+  }
+  .menu-icon {
+    display: inline-block;
+    margin-top: 11px;
+    margin-right: 9px;
+  }
+`;
+
+const enhance = compose<React.FC>(
+  connect<{}, MenuDispatchProps, {}, any>(undefined, {
+    push,
+  }),
+);
+
+export default enhance(Menu);
