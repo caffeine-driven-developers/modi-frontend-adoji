@@ -10,7 +10,11 @@ const Home: React.FC = props => {
         <title>modi95</title>
       </Helmet>
 
-      <h1>Movie Diary 95</h1>
+      <h1>
+        <span style={{ verticalAlign: 'text-top' }}>Movie Diary 95</span>
+        &nbsp;
+        <Icon name="notepad" />
+      </h1>
       <p className="intro">
         <span>Press "</span>
         <Icon name="logo" width={22} height={22} />
