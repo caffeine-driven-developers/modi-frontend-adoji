@@ -10,6 +10,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import { hot } from 'react-hot-loader/root';
 import { Route, Switch } from 'react-router';
 import { history } from 'stores';
+import Search from 'pages/Search';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         {/* tslint:disable jsx-no-lambda */}
         <Switch>
           <Route exact={true} path="/" render={() => <Home />} />
+          <Route path="/search" render={() => <Search />} />
           <Route render={() => <NoMatch />} />
         </Switch>
         <Nav />

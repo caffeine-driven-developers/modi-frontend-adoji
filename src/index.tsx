@@ -5,16 +5,14 @@ import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './stores';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { reset, themes } from 'react95';
+import { ThemeProvider } from 'styled-components';
+import { themes } from 'react95';
 
 const store = configureStore();
 
-const ResetStyles = createGlobalStyle`${reset}`;
-
 ReactDOM.render(
   <Provider store={store}>
-    <ResetStyles />
+    {/* <ResetStyles /> */}
     <ThemeProvider theme={themes.default}>
       <App />
     </ThemeProvider>
