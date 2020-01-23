@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Icon } from '@react95/core';
 import { TextField, Button } from 'react95';
+import { searchByTitle } from 'services/omdb';
 
 const Search: React.FC = () => {
   const [searchText, setSearchText] = useState('');
+  const [searchResult, setSearchResult] = useState<any>({});
 
   const onChangeSearchText: React.ChangeEventHandler<HTMLInputElement> = e =>
     setSearchText(e.target.value);
 
   const handleClick = React.useCallback(async () => {
-    console.log('ddd', searchText);
+    // TODO: decide whether searchText is title or id
+    const res = await searchByTitle(searchText);
+    setSearchResult(res.data);
   }, [searchText]);
 
   return (
@@ -37,11 +41,13 @@ const Search: React.FC = () => {
           </div>
         </div>
       </div>
+      <pre>{JSON.stringify(searchResult, null, 2)}</pre>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  padding-bottom: 200px;
   .col.right {
     display: flex;
     justify-content: center;
