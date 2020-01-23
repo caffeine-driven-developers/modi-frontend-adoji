@@ -8,6 +8,7 @@
     "@react95/core": "^2.4.5",
     "@rehooks/component-size": "^1.0.3",
     "@use-hooks/image-size": "^1.0.5",
+    "axios": "^0.19.2",
     "connected-react-router": "6.6.1",
     "deep-copy": "^1.4.2",
     "delay": "^4.2.0",
