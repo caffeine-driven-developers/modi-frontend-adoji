@@ -32,6 +32,7 @@ const Search: React.FC = () => {
       const res = await searchByTitle(searchText);
       console.log(res.data);
       if (res.data.Response === 'False') {
+        setSearchResult({});
         setError(res.data.Error);
       } else {
         setSearchResult(res.data);
@@ -75,7 +76,11 @@ const Search: React.FC = () => {
       <div className="row">
         {!isInitialState && !error && (
           <Window>
-            <WindowHeader>search.exe</WindowHeader>
+            <WindowHeader>
+              search.exe - Top {searchResult.Search.length} result
+              {searchResult.Search.length > 1 &&
+                `s out of ${searchResult.totalResults}`}
+            </WindowHeader>
             <WindowContent>
               <Table>
                 <TableHead>
@@ -87,7 +92,7 @@ const Search: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   {searchResult.Search.map((x: any) => (
-                    <TableRow key={x.Title}>
+                    <TableRow key={x.imdbID}>
                       <TableDataCell>
                         <img className="img-fluid" src={x.Poster} />
                       </TableDataCell>
@@ -126,6 +131,7 @@ const Wrapper = styled.div`
 
   /* css for table scroll START */
   table {
+    width: 418px;
   }
   tbody,
   thead tr {
