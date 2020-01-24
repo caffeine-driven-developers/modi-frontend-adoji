@@ -11,11 +11,15 @@ const Search: React.FC = () => {
   const onChangeSearchText: React.ChangeEventHandler<HTMLInputElement> = e =>
     setSearchText(e.target.value);
 
-  const handleClick = React.useCallback(async () => {
-    // TODO: decide whether searchText is title or id
-    const res = await searchByTitle(searchText);
-    setSearchResult(res.data);
-  }, [searchText]);
+  const handleClick = React.useCallback(
+    async e => {
+      e.preventDefault();
+      // TODO: decide whether searchText is title or id
+      const res = await searchByTitle(searchText);
+      setSearchResult(res.data);
+    },
+    [searchText],
+  );
 
   return (
     <Wrapper className="container">
@@ -29,11 +33,13 @@ const Search: React.FC = () => {
         </div>
         <div className="col right">
           <div className="float-right">
-            <TextField
-              className="text-field"
-              shadow={false}
-              onChange={onChangeSearchText}
-            ></TextField>
+            <form action="#" onSubmit={handleClick}>
+              <TextField
+                className="text-field"
+                shadow={false}
+                onChange={onChangeSearchText}
+              />
+            </form>
             &nbsp;
             <Button onClick={handleClick}>
               <span style={{ fontWeight: 'bold' }}>Search</span>
