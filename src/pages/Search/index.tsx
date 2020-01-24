@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Icon } from '@react95/core';
-import { TextField, Button } from 'react95';
+import {
+  TextField,
+  Button,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeadCell,
+  TableBody,
+  TableDataCell,
+  Window,
+  WindowHeader,
+  WindowContent,
+} from 'react95';
 import { searchByTitle } from 'services/omdb';
+import __ from 'lodash';
 
 const Search: React.FC = () => {
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState<any>({});
+  const [error, setError] = useState<string>();
 
   const onChangeSearchText: React.ChangeEventHandler<HTMLInputElement> = e =>
     setSearchText(e.target.value);
@@ -16,10 +30,20 @@ const Search: React.FC = () => {
       e.preventDefault();
       // TODO: decide whether searchText is title or id
       const res = await searchByTitle(searchText);
-      setSearchResult(res.data);
+      console.log(res.data);
+      if (res.data.Response === 'False') {
+        setError(res.data.Error);
+      } else {
+        setSearchResult(res.data);
+        setError(undefined);
+      }
     },
     [searchText],
   );
+
+  const isInitialState = React.useMemo(() => {
+    return __.isEqual({}, searchResult);
+  }, searchResult);
 
   return (
     <Wrapper className="container">
@@ -47,6 +71,36 @@ const Search: React.FC = () => {
           </div>
         </div>
       </div>
+      {error && <div>Error: {error}</div>}
+      <div className="row">
+        {!isInitialState && !error && (
+          <Window>
+            <WindowHeader>search.exe</WindowHeader>
+            <WindowContent>
+              <Table>
+                <TableHead>
+                  <TableRow head={true}>
+                    <TableHeadCell>Poster</TableHeadCell>
+                    <TableHeadCell>Title</TableHeadCell>
+                    <TableHeadCell>Year</TableHeadCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {searchResult.Search.map((x: any) => (
+                    <TableRow key={x.Title}>
+                      <TableDataCell>
+                        <img className="img-fluid" src={x.Poster} />
+                      </TableDataCell>
+                      <TableDataCell>{x.Title}</TableDataCell>
+                      <TableDataCell>{x.Year}</TableDataCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </WindowContent>
+          </Window>
+        )}
+      </div>
       <pre>{JSON.stringify(searchResult, null, 2)}</pre>
     </Wrapper>
   );
@@ -69,6 +123,37 @@ const Wrapper = styled.div`
       }
     }
   }
+
+  /* css for table scroll START */
+  table {
+  }
+  tbody,
+  thead tr {
+    display: block;
+  }
+
+  tbody td:nth-child(1),
+  thead th:nth-child(1) {
+    width: 130px;
+  }
+
+  tbody td:nth-child(2),
+  thead th:nth-child(2) {
+    width: 180px;
+    text-align: center;
+  }
+
+  tbody td:nth-child(3),
+  thead th:nth-child(3) {
+    width: 40px;
+  }
+
+  tbody {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /* css for table scroll END */
 
   i {
     display: inline-block;
