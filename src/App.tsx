@@ -11,6 +11,7 @@ import { hot } from 'react-hot-loader/root';
 import { Route, Switch } from 'react-router';
 import { history } from 'stores';
 import Search from 'pages/Search';
+import Register from 'pages/Register';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact={true} path="/" render={() => <Home />} />
           <Route path="/search" render={() => <Search />} />
+          <Route path="/register" render={() => <Register />} />
           <Route render={() => <NoMatch />} />
         </Switch>
         <Nav />

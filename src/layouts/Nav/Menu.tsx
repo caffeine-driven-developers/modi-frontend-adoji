@@ -29,6 +29,10 @@ const Menu: React.FC<MenuProps> = props => {
         push('/search');
         break;
       }
+      case 'register': {
+        push('/register');
+        break;
+      }
       default: {
         console.error(`${menu} is not defined`);
       }
@@ -48,12 +52,16 @@ const Menu: React.FC<MenuProps> = props => {
             <Icon className="menu-icon" name="explore" height={23} width={23} />
             Search
           </ListItem>
-          <ListItem disabled>
+          <ListItem onClick={() => handleMenu('register')}>
+            <Icon className="menu-icon" name="memory" height={23} width={23} />
+            Register
+          </ListItem>
+          <ListItem disabled={true}>
             <Icon className="menu-icon" name="user" height={23} width={23} />
             Profile
           </ListItem>
           <Divider />
-          <ListItem disabled>
+          <ListItem disabled={true}>
             <Icon
               className="menu-icon"
               name="power_off"
