@@ -113,6 +113,11 @@ const Search: React.FC = () => {
 
 const Wrapper = styled.div`
   padding-bottom: 200px;
+
+  i {
+    display: inline-block;
+  }
+
   .col.right {
     display: flex;
     justify-content: center;
@@ -160,10 +165,6 @@ const Wrapper = styled.div`
     overflow-x: hidden;
   }
   /* css for table scroll END */
-
-  i {
-    display: inline-block;
-  }
 `;
 
 export default Search;

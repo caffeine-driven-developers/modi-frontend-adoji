@@ -8,7 +8,7 @@ export default () => {
 
       <div>Sorry, we can't find the page you're looking for</div>
       <div className="back-home-btn">
-        <button>Back Home</button>
+        <a href="/">Back Home</a>
       </div>
       {/* tslint:disable-next-line */}
       {/* <style jsx>{`
