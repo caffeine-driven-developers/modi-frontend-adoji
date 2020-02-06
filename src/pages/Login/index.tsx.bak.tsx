@@ -9,14 +9,24 @@ import {
   DatePicker,
   Button,
 } from 'react95';
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from 'react-google-login';
 
-const Register: React.FC = () => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
   const [isBirthdayPickerVisible, setIsBirthdayPickerVisible] = useState(false);
   const [birthday, setBirthday] = useState<Date>(new Date('1992-05-06'));
+
+  const onFinish = useCallback((res: any) => {
+    const response = res as GoogleLoginResponse;
+    console.log('res', response);
+  }, []);
 
   const isValid = useMemo(() => {
     if (
@@ -43,7 +53,7 @@ const Register: React.FC = () => {
       <div className="row">
         <div className="col-12">
           <h1>
-            <span style={{ verticalAlign: 'text-top' }}>Register</span>
+            <span style={{ verticalAlign: 'text-top' }}>Login</span>
             &nbsp;
             <Icon name="memory" />
           </h1>
@@ -52,8 +62,15 @@ const Register: React.FC = () => {
       <div className="row justify-content-center">
         <div className="col-6">
           <Window style={{ width: '100%' }}>
-            <WindowHeader>register.exe</WindowHeader>
+            <WindowHeader>login.exe</WindowHeader>
             <WindowContent>
+              <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID!}
+                onSuccess={onFinish}
+                onFailure={onFinish}
+                cookiePolicy={'single_host_origin'}
+              />
+              {JSON.stringify(process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID)}
               <h3 className="form-label" style={{ marginTop: 0 }}>
                 E-mail
               </h3>
@@ -169,4 +186,4 @@ const Wrapper = styled.div`
     font-weight: 700;
   }
 `;
-export default Register;
+export default Login;

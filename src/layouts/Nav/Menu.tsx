@@ -29,8 +29,8 @@ const Menu: React.FC<MenuProps> = props => {
         push('/search');
         break;
       }
-      case 'register': {
-        push('/register');
+      case 'login': {
+        push('/login');
         break;
       }
       default: {
@@ -52,9 +52,9 @@ const Menu: React.FC<MenuProps> = props => {
             <Icon className="menu-icon" name="explore" height={23} width={23} />
             Search
           </ListItem>
-          <ListItem onClick={() => handleMenu('register')}>
-            <Icon className="menu-icon" name="memory" height={23} width={23} />
-            Register
+          <ListItem onClick={() => handleMenu('login')}>
+            <Icon className="menu-icon" name="dial" height={23} width={23} />
+            Login
           </ListItem>
           <ListItem disabled={true}>
             <Icon className="menu-icon" name="user" height={23} width={23} />
