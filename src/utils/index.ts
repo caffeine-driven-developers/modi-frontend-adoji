@@ -1,5 +1,5 @@
 import { AuthenticationRole } from 'hocs/withAuthBase';
-import { isNil } from 'lodash';
+import { isNil, memoize } from 'lodash';
 import { GoogleLoginResponse } from 'react-google-login';
 import axios from 'axios';
 
@@ -9,6 +9,10 @@ export function getGoogleLoginResponseFromLocalStorage(): GoogleLoginResponse | 
     return null;
   }
   return JSON.parse(glr) as GoogleLoginResponse;
+}
+
+export function deleteGoogleLoginResponseFromLocalStorage(): void {
+  window.localStorage.removeItem('glr');
 }
 
 export async function validateAccessToken(
@@ -27,14 +31,23 @@ export async function validateAccessToken(
   return !hasError;
 }
 
-export async function checkUserLogin(): Promise<boolean> {
+/**
+ * glr이 있는지 확인하고, access_token이 유효한지 구글 서버에게 물어봄
+ */
+export const checkUserLogin = async (): Promise<boolean> => {
   const glr = getGoogleLoginResponseFromLocalStorage();
   if (isNil(glr)) {
     return false;
   }
   const isTokenValid = await validateAccessToken(glr);
   return isTokenValid;
-}
+};
+
+/**
+ * glr이 있는지만 확인함
+ */
+export const checkUserLoginNaively = () =>
+  !!getGoogleLoginResponseFromLocalStorage();
 
 export async function validateUser(
   requiredRole: AuthenticationRole,
