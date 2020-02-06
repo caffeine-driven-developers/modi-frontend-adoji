@@ -27,7 +27,7 @@ export async function validateAccessToken(
   return !hasError;
 }
 
-export async function isLoggedIn(): Promise<boolean> {
+export async function checkUserLogin(): Promise<boolean> {
   const glr = getGoogleLoginResponseFromLocalStorage();
   if (isNil(glr)) {
     return false;
