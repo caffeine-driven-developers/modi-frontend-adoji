@@ -35,10 +35,10 @@ const Menu: React.FC<MenuProps> = props => {
         push('/search');
         break;
       }
-      case 'login': {
-        push('/login');
-        break;
-      }
+      // case 'login': {
+      //   push('/login');
+      //   break;
+      // }
       case 'logout': {
         // NOTE: ListItem이 onClick 먹어버려서 이런식으로 우회 구현함
         const btn = document.getElementById('google_logout_btn_wrapper')
@@ -68,10 +68,10 @@ const Menu: React.FC<MenuProps> = props => {
             <Icon className="menu-icon" name="explore" height={23} width={23} />
             Search
           </ListItem>
-          <ListItem onClick={() => handleMenu('login')}>
+          {/* <ListItem onClick={() => handleMenu('login')}>
             <Icon className="menu-icon" name="dial" height={23} width={23} />
             Login
-          </ListItem>
+          </ListItem> */}
           <ListItem disabled={true}>
             <Icon className="menu-icon" name="user" height={23} width={23} />
             Profile

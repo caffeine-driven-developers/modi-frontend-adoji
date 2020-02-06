@@ -11,7 +11,6 @@ import { hot } from 'react-hot-loader/root';
 import { Route, Switch } from 'react-router';
 import { history } from 'stores';
 import Search from 'pages/Search';
-import Login from 'pages/Login';
 import TestAuthPage from 'pages/TestAuthPage';
 
 const App: React.FC = () => {
@@ -22,7 +21,6 @@ const App: React.FC = () => {
         <Switch>
           <Route exact={true} path="/" render={() => <Home />} />
           <Route path="/search" render={() => <Search />} />
-          <Route path="/login" render={() => <Login />} />
           <Route path="/test-auth-page" render={() => <TestAuthPage />} />
           <Route render={() => <NoMatch />} />
         </Switch>
