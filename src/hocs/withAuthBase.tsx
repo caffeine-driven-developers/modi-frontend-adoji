@@ -12,13 +12,19 @@ export enum AuthenticationRole {
   Admin = 'admin',
 }
 
+enum AccessTokenValidation {
+  Fetching = 'fetching',
+  Invalid = 'invalid',
+  Valid = 'valid',
+}
+
 type WithAuthorizationProps = {
   dispatch: Dispatch;
 };
 
 type WithAuthorizationState = {
   glr: GoogleLoginResponse | null;
-  isAccessTokenValid: boolean;
+  isAccessTokenValid: AccessTokenValidation;
 };
 
 const withAuthBase = (requiredRole: AuthenticationRole) => (
@@ -33,7 +39,7 @@ const withAuthBase = (requiredRole: AuthenticationRole) => (
       super(props);
       this.state = {
         glr: getGoogleLoginResponseFromLocalStorage(),
-        isAccessTokenValid: false,
+        isAccessTokenValid: AccessTokenValidation.Fetching,
       };
     }
 
@@ -43,9 +49,12 @@ const withAuthBase = (requiredRole: AuthenticationRole) => (
         this.timeoutId = window.setTimeout(() => {
           this.props.dispatch(push(fallbackUrl!));
         }, 1500);
+        this.setState({
+          isAccessTokenValid: AccessTokenValidation.Invalid,
+        });
       } else {
         this.setState({
-          isAccessTokenValid: true,
+          isAccessTokenValid: AccessTokenValidation.Valid,
         });
       }
     }
