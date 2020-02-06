@@ -32,7 +32,8 @@ export async function isLoggedIn(): Promise<boolean> {
   if (isNil(glr)) {
     return false;
   }
-  return true;
+  const isTokenValid = await validateAccessToken(glr);
+  return isTokenValid;
 }
 
 export async function validateUser(
