@@ -44,7 +44,7 @@ const Search: React.FC = () => {
 
   const isInitialState = React.useMemo(() => {
     return __.isEqual({}, searchResult);
-  }, searchResult);
+  }, searchResult); // eslint-disable-line
 
   return (
     <Wrapper className="container">
