@@ -2,7 +2,7 @@ import 'App.css';
 import 'bootstrap4.grid.css';
 import { ConnectedRouter } from 'connected-react-router';
 import Nav from 'layouts/Nav';
-import Home from 'pages';
+import Home from 'pages/Home';
 import Mobile from 'pages/Mobile';
 import NoMatch from 'pages/NoMatch';
 import React from 'react';
