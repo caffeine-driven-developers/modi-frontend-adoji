@@ -35,6 +35,10 @@ const Menu: React.FC<MenuProps> = props => {
         push('/search');
         break;
       }
+      case 'movie_lists': {
+        push('/movie-lists');
+        break;
+      }
       // case 'login': {
       //   push('/login');
       //   break;
@@ -64,18 +68,23 @@ const Menu: React.FC<MenuProps> = props => {
           open={open}
           onClick={handleClose}
         >
+          <ListItem disabled={true}>
+            <Icon className="menu-icon" name="user" height={23} width={23} />
+            Profile
+          </ListItem>
           <ListItem onClick={() => handleMenu('search')}>
             <Icon className="menu-icon" name="explore" height={23} width={23} />
             Search
+          </ListItem>
+          <ListItem onClick={() => handleMenu('movie_lists')}>
+            <Icon className="menu-icon" name="files" height={23} width={23} />
+            Movie Lists
           </ListItem>
           {/* <ListItem onClick={() => handleMenu('login')}>
             <Icon className="menu-icon" name="dial" height={23} width={23} />
             Login
           </ListItem> */}
-          <ListItem disabled={true}>
-            <Icon className="menu-icon" name="user" height={23} width={23} />
-            Profile
-          </ListItem>
+
           <Divider />
           <ListItem
             disabled={!isLoggedInNaively}

@@ -12,6 +12,7 @@ import { Route, Switch } from 'react-router';
 import { history } from 'stores';
 import Search from 'pages/Search';
 import TestAuthPage from 'pages/TestAuthPage';
+import MovieLists from 'pages/MovieLists';
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact={true} path="/" render={() => <Home />} />
           <Route path="/search" render={() => <Search />} />
+          <Route path="/movie-lists" render={() => <MovieLists />} />
           <Route path="/test-auth-page" render={() => <TestAuthPage />} />
           <Route render={() => <NoMatch />} />
         </Switch>
