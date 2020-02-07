@@ -21,11 +21,13 @@ const Home: React.FC = props => {
           <Icon name="notepad" />
           {/* {JSON.stringify(isLoggedInNaively)} */}
         </h1>
-        <p className="intro">
-          <span>Press "</span>
-          <Icon name="logo" width={22} height={22} />
-          <span> Start" on the bottom left.</span>
-        </p>
+        {isLoggedInNaively && (
+          <p className="intro">
+            <span>Press "</span>
+            <Icon name="logo" width={22} height={22} />
+            <span> Start" on the bottom left.</span>
+          </p>
+        )}
         {!isLoggedInNaively && (
           <div className="row justify-content-center">
             <div className="col-4">
