@@ -27,10 +27,7 @@ type WithAuthorizationState = {
 const withAuthBase = (requiredRole: AuthenticationRole) => (
   Component: React.ComponentType,
 ): React.ComponentType => {
-  class WithAuthorization extends React.Component<
-    WithAuthorizationProps,
-    WithAuthorizationState
-  > {
+  class WithAuthorization extends React.Component<WithAuthorizationProps, WithAuthorizationState> {
     private timeoutId: number | null;
     constructor(props: any) {
       super(props);

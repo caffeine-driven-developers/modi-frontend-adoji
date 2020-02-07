@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { List, ListItem, Divider, Button } from 'react95';
 import { Icon } from '@react95/core';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import firebase from 'firebase/app';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 type MenuDispatchProps = {
   push: typeof push;
@@ -14,8 +15,9 @@ type MenuProps = MenuDispatchProps;
 
 const Menu: React.FC<MenuProps> = props => {
   const { push } = props;
-  const [open, setOpen] = React.useState(false);
-  const isLoggedIn = !!firebase.auth().currentUser;
+  const [open, setOpen] = useState(false);
+  const [user] = useAuthState(firebase.auth());
+  const isLoggedIn = !!user;
 
   function handleClick() {
     setOpen(!open);
@@ -54,12 +56,7 @@ const Menu: React.FC<MenuProps> = props => {
   return (
     <Wrapper>
       {open && (
-        <List
-          horizontalAlign="left"
-          verticalAlign="top"
-          open={open}
-          onClick={handleClose}
-        >
+        <List horizontalAlign="left" verticalAlign="top" open={open} onClick={handleClose}>
           <ListItem disabled={true}>
             <Icon className="menu-icon" name="user" height={23} width={23} />
             Profile
@@ -80,30 +77,30 @@ const Menu: React.FC<MenuProps> = props => {
           <Divider />
           {isLoggedIn ? (
             <ListItem onClick={() => handleMenu('logout')}>
-              <Icon
-                className="menu-icon"
-                name="power_off"
-                height={23}
-                width={23}
-              />
+              <Icon className="menu-icon" name="power_off" height={23} width={23} />
               Logout
             </ListItem>
           ) : (
             <ListItem onClick={() => handleMenu('login')}>
-              <Icon
-                className="menu-icon"
-                name="power_on"
-                height={23}
-                width={23}
-              />
+              <Icon className="menu-icon" name="power_on" height={23} width={23} />
               Login
             </ListItem>
           )}
         </List>
       )}
 
-      <Button onClick={handleClick} style={{ fontWeight: 'bold' }}>
-        <Icon name="logo" style={{ marginRight: '4px' }} />
+      <Button
+        onClick={handleClick}
+        style={{
+          fontWeight: 'bold',
+        }}
+      >
+        <Icon
+          name="logo"
+          style={{
+            marginRight: '4px',
+          }}
+        />
         Start
       </Button>
     </Wrapper>
