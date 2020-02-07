@@ -1,28 +1,24 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
-import { Icon } from '@react95/core';
-import {
-  Window,
-  WindowHeader,
-  WindowContent,
-  // TextField,
-  // DatePicker,
-  Button,
-} from 'react95';
-import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
+import { Window, WindowHeader, WindowContent, Button } from 'react95';
 import { compose, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import firebase from 'firebase/app';
 
 type LoginProps = {
   dispatch: Dispatch;
 };
 const LoginWindow: React.FC<LoginProps> = props => {
-  const onSuccess = useCallback((res: any) => {
-    const response = res as GoogleLoginResponse;
-    window.localStorage.setItem('glr', JSON.stringify(response));
-    props.dispatch(push('/'));
-  }, []);
+  // const onSuccess = useCallback((res: any) => {
+  //   const response = res as GoogleLoginResponse;
+  //   window.localStorage.setItem('glr', JSON.stringify(response));
+  //   props.dispatch(push('/'));
+  // }, []);
+
+  const handleClick = useCallback(async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(provider);
+  }, [0]);
 
   return (
     <Window style={{ width: '100%' }}>
@@ -31,17 +27,14 @@ const LoginWindow: React.FC<LoginProps> = props => {
         I support the google login only.
         <br />
         <br />
-        <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID!}
-          onSuccess={onSuccess}
-          onFailure={onSuccess}
-          cookiePolicy={'single_host_origin'}
-          render={props => (
-            <Button style={{ fontWeight: '700' }} {...props} fullWidth={true}>
-              🔑 Login with google
-            </Button>
-          )}
-        />
+        <Button
+          style={{ fontWeight: '700' }}
+          {...props}
+          fullWidth={true}
+          onClick={handleClick}
+        >
+          🔑 Login with google
+        </Button>
       </WindowContent>
     </Window>
   );

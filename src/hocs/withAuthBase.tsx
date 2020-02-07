@@ -1,11 +1,9 @@
 import React from 'react';
-import { isNil } from 'lodash';
-import { GoogleLoginResponse } from 'react-google-login';
+// import { isNil } from 'lodash';
 import { compose, Dispatch } from 'redux';
 import { withRouter } from 'react-router';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { getGoogleLoginResponseFromLocalStorage, validateUser } from '../utils';
 
 export enum AuthenticationRole {
   User = 'user',
@@ -23,7 +21,6 @@ type WithAuthorizationProps = {
 };
 
 type WithAuthorizationState = {
-  glr: GoogleLoginResponse | null;
   isAccessTokenValid: AccessTokenValidation;
 };
 
@@ -38,25 +35,24 @@ const withAuthBase = (requiredRole: AuthenticationRole) => (
     constructor(props: any) {
       super(props);
       this.state = {
-        glr: getGoogleLoginResponseFromLocalStorage(),
         isAccessTokenValid: AccessTokenValidation.Fetching,
       };
     }
 
     async componentDidMount() {
-      const { hasAuth, fallbackUrl } = await validateUser(requiredRole);
-      if (!hasAuth) {
-        this.timeoutId = window.setTimeout(() => {
-          this.props.dispatch(push(fallbackUrl!));
-        }, 1500);
-        this.setState({
-          isAccessTokenValid: AccessTokenValidation.Invalid,
-        });
-      } else {
-        this.setState({
-          isAccessTokenValid: AccessTokenValidation.Valid,
-        });
-      }
+      // const { hasAuth, fallbackUrl } = await validateUser(requiredRole);
+      // if (!hasAuth) {
+      //   this.timeoutId = window.setTimeout(() => {
+      //     this.props.dispatch(push(fallbackUrl!));
+      //   }, 1500);
+      //   this.setState({
+      //     isAccessTokenValid: AccessTokenValidation.Invalid,
+      //   });
+      // } else {
+      //   this.setState({
+      //     isAccessTokenValid: AccessTokenValidation.Valid,
+      //   });
+      // }
     }
 
     componentWillUnmount() {
@@ -67,9 +63,9 @@ const withAuthBase = (requiredRole: AuthenticationRole) => (
     }
 
     render() {
-      if (isNil(this.state.glr)) {
-        return <span>not logged in</span>;
-      }
+      // if (isNil(this.state.glr)) {
+      //   return <span>not logged in</span>;
+      // }
       if (this.state.isAccessTokenValid === AccessTokenValidation.Fetching) {
         return <span>loading...</span>;
       }
