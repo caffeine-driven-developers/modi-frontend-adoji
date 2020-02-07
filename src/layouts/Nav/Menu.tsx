@@ -25,7 +25,7 @@ const Menu: React.FC<MenuProps> = props => {
     setOpen(false);
   }
 
-  function handleMenu(menu: string) {
+  async function handleMenu(menu: string) {
     switch (menu) {
       case 'search': {
         push('/search');
@@ -35,12 +35,14 @@ const Menu: React.FC<MenuProps> = props => {
         push('/movie-lists');
         break;
       }
-      // case 'login': {
-      //   push('/login');
-      //   break;
-      // }
+      case 'login': {
+        push('/');
+        break;
+      }
       case 'logout': {
-        firebase.auth().signOut();
+        push('/');
+        await firebase.auth().signOut();
+        location.reload();
         break;
       }
       default: {
@@ -76,15 +78,27 @@ const Menu: React.FC<MenuProps> = props => {
           </ListItem> */}
 
           <Divider />
-          <ListItem disabled={!isLoggedIn} onClick={() => handleMenu('logout')}>
-            <Icon
-              className="menu-icon"
-              name="power_off"
-              height={23}
-              width={23}
-            />
-            Logout
-          </ListItem>
+          {isLoggedIn ? (
+            <ListItem onClick={() => handleMenu('logout')}>
+              <Icon
+                className="menu-icon"
+                name="power_off"
+                height={23}
+                width={23}
+              />
+              Logout
+            </ListItem>
+          ) : (
+            <ListItem onClick={() => handleMenu('login')}>
+              <Icon
+                className="menu-icon"
+                name="power_on"
+                height={23}
+                width={23}
+              />
+              Login
+            </ListItem>
+          )}
         </List>
       )}
 
