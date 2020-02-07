@@ -58,7 +58,6 @@ const MovieLists: React.FC<MovieListsProps> = props => {
 
 const Wrapper = styled.div`
   padding-top: 3em;
-  border: 1px solid black;
   height: 100vh;
   background-color: rgb(85, 170, 170);
 

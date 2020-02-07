@@ -3,11 +3,12 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Icon } from '@react95/core';
 import LoginWindow from './components/LoginWindow';
-import { checkUserLoginNaively } from 'utils';
+import firebase from 'firebase/app';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const Home: React.FC = props => {
-  const isLoggedInNaively = checkUserLoginNaively();
-
+  const [user, isLoading, error] = useAuthState(firebase.auth());
+  const isLoggedIn = !!user;
   return (
     <Wrapper>
       <Helmet>
@@ -19,16 +20,17 @@ const Home: React.FC = props => {
           <span style={{ verticalAlign: 'text-top' }}>Movie Diary 95</span>
           &nbsp;
           <Icon name="notepad" />
-          {/* {JSON.stringify(isLoggedInNaively)} */}
         </h1>
-        {isLoggedInNaively && (
+        {error && <span>{JSON.stringify(error)}</span>}
+        {/* {isLoading && <p className="intro">loading...</p>} */}
+        {!isLoading && isLoggedIn && (
           <p className="intro">
             <span>Press "</span>
             <Icon name="logo" width={22} height={22} />
             <span> Start" on the bottom left.</span>
           </p>
         )}
-        {!isLoggedInNaively && (
+        {!isLoading && !isLoggedIn && (
           <div className="row justify-content-center">
             <div className="col-4">
               <LoginWindow />
@@ -45,7 +47,6 @@ const Home: React.FC = props => {
 
 const Wrapper = styled.div`
   padding-top: 3em;
-  border: 1px solid black;
   height: 100vh;
   background-color: rgb(85, 170, 170);
 
