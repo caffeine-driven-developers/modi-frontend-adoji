@@ -1,55 +1,51 @@
 import React from 'react';
-// import { isNil } from 'lodash';
-import { compose, Dispatch } from 'redux';
+import { isNil } from 'lodash';
+import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
+import firebase from 'firebase/app';
 
 export enum AuthenticationRole {
   User = 'user',
   Admin = 'admin',
 }
 
-enum AccessTokenValidation {
-  Fetching = 'fetching',
-  Invalid = 'invalid',
-  Valid = 'valid',
-}
-
-type WithAuthorizationProps = {
-  dispatch: Dispatch;
+type WithAuthorizationDispatchProps = {
+  push: typeof push;
 };
+type WithAuthorizationProps = WithAuthorizationDispatchProps;
 
 type WithAuthorizationState = {
-  isAccessTokenValid: AccessTokenValidation;
+  authUser: firebase.User | null;
+  isLoading: boolean;
 };
 
 const withAuthBase = (requiredRole: AuthenticationRole) => (
   Component: React.ComponentType,
 ): React.ComponentType => {
+  // TODO: handle requiredRole === admin
   class WithAuthorization extends React.Component<WithAuthorizationProps, WithAuthorizationState> {
     private timeoutId: number | null;
+    private unsubscribe: firebase.Unsubscribe;
+
     constructor(props: any) {
       super(props);
       this.state = {
-        isAccessTokenValid: AccessTokenValidation.Fetching,
+        authUser: firebase.auth().currentUser,
+        isLoading: true,
       };
     }
 
     async componentDidMount() {
-      // const { hasAuth, fallbackUrl } = await validateUser(requiredRole);
-      // if (!hasAuth) {
-      //   this.timeoutId = window.setTimeout(() => {
-      //     this.props.dispatch(push(fallbackUrl!));
-      //   }, 1500);
-      //   this.setState({
-      //     isAccessTokenValid: AccessTokenValidation.Invalid,
-      //   });
-      // } else {
-      //   this.setState({
-      //     isAccessTokenValid: AccessTokenValidation.Valid,
-      //   });
-      // }
+      this.unsubscribe = firebase.auth().onAuthStateChanged(async authUser => {
+        this.setState({ authUser, isLoading: false });
+        if (isNil(authUser)) {
+          setTimeout(() => {
+            this.props.push('/');
+          }, 1500);
+        }
+      });
     }
 
     componentWillUnmount() {
@@ -57,23 +53,24 @@ const withAuthBase = (requiredRole: AuthenticationRole) => (
         window.clearTimeout(this.timeoutId);
         this.timeoutId = null;
       }
+      this.unsubscribe();
     }
 
     render() {
-      // if (isNil(this.state.glr)) {
-      //   return <span>not logged in</span>;
-      // }
-      if (this.state.isAccessTokenValid === AccessTokenValidation.Fetching) {
+      if (this.state.isLoading) {
         return <span>loading...</span>;
       }
-      if (this.state.isAccessTokenValid === AccessTokenValidation.Invalid) {
-        return <span>please log in again</span>;
+      if (isNil(this.state.authUser)) {
+        return <span>please log in</span>;
       }
       return <Component {...this.props} />;
     }
   }
 
-  return compose<React.ComponentType>(withRouter, connect())(WithAuthorization);
+  return compose<React.ComponentType>(
+    withRouter,
+    connect<{}, WithAuthorizationDispatchProps, {}, any>(undefined, { push }),
+  )(WithAuthorization);
 };
 
 export default withAuthBase;
