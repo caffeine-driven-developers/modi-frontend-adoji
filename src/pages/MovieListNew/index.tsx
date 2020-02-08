@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Icon } from '@react95/core';
@@ -9,6 +9,18 @@ import MovieListTable from './components/MovieListTable';
 import MovieSearchForm from './components/MovieSearchForm';
 
 const CreateMovieList: React.FC = () => {
+  const [isSearchWindowVisible, setIsSearchWindowVisible] = useState(false);
+  const handleClick = useCallback((type: string) => {
+    switch (type) {
+      case 'add': {
+        setIsSearchWindowVisible(true);
+        break;
+      }
+      default: {
+        console.error(`not defined type ${type}`);
+      }
+    }
+  }, []);
   return (
     <Wrapper>
       <Helmet>
@@ -26,13 +38,25 @@ const CreateMovieList: React.FC = () => {
           </div>
         </div>
         <div className="row">
-          <Window>
-            <WindowHeader>movie_list.exe</WindowHeader>
-            <WindowContent>
-              <MovieListTable />
-              <MovieSearchForm />
-            </WindowContent>
-          </Window>
+          <div className="col-6">
+            <Window>
+              <WindowHeader>movie_list.exe</WindowHeader>
+              <WindowContent>
+                <MovieListTable />
+                <Button onClick={() => handleClick('add')}>add</Button>
+              </WindowContent>
+            </Window>
+          </div>
+          <div className="col-6">
+            {isSearchWindowVisible && (
+              <Window>
+                <WindowHeader>add_new_movie_to_list.exe</WindowHeader>
+                <WindowContent>
+                  <MovieSearchForm />
+                </WindowContent>
+              </Window>
+            )}
+          </div>
         </div>
       </div>
     </Wrapper>
