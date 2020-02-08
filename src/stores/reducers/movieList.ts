@@ -1,7 +1,7 @@
 import { SearchedMovie } from './../../services/omdb';
 import { cloneDeep } from 'lodash';
 import { createActionCreator, createReducer } from 'deox';
-type MovieListState = {
+export type MovieListState = {
   currentMovieList: SearchedMovie[];
 };
 export const initialState: MovieListState = {
@@ -22,12 +22,16 @@ export const movieListActions = {
 const movieListReducer = createReducer(initialState, handleAction => [
   handleAction(movieListActions.updateCurrentMovieList, (state, { payload }) => {
     const newState = cloneDeep(state);
-    state.currentMovieList = payload;
+    newState.currentMovieList = payload;
     return newState;
   }),
   handleAction(movieListActions.pushSearchedMovie, (state, { payload }) => {
+    if (state.currentMovieList.findIndex(x => x.imdbID === payload.imdbID) >= 0) {
+      // NOTE: do not push if duplicated
+      return state;
+    }
     const newState = cloneDeep(state);
-    state.currentMovieList.push(payload);
+    newState.currentMovieList.push(payload);
     return newState;
   }),
 ]);
