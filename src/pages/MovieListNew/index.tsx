@@ -7,6 +7,7 @@ import { withUserAuth } from 'hocs/withAuth';
 import { compose } from 'redux';
 import MovieListTable from './components/MovieListTable';
 import MovieSearchForm from './components/MovieSearchForm';
+import MovieListForm from './components/MovieListForm';
 
 const CreateMovieList: React.FC = () => {
   const [isSearchWindowVisible, setIsSearchWindowVisible] = useState(false);
@@ -42,8 +43,12 @@ const CreateMovieList: React.FC = () => {
             <Window>
               <WindowHeader>movie_list.exe</WindowHeader>
               <WindowContent>
-                <MovieListTable />
-                <Button onClick={() => handleClick('add')}>add</Button>
+                <MovieListForm setIsSearchWindowVisible={setIsSearchWindowVisible} />
+                {!isSearchWindowVisible && (
+                  <Button fullWidth={true} onClick={() => handleClick('add')}>
+                    Add
+                  </Button>
+                )}
               </WindowContent>
             </Window>
           </div>

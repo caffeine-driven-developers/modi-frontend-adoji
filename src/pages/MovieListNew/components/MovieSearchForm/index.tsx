@@ -3,8 +3,18 @@ import styled from 'styled-components';
 import { TextField, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell } from 'react95';
 import { searchByTitle } from 'services/omdb';
 import { isEqual } from 'lodash';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { movieListActions } from 'stores/reducers/movieList';
 
-const MovieSearchForm: React.FC = () => {
+type MovieSearchFormDispatchProps = {
+  pushSearchedMovie: typeof movieListActions.pushSearchedMovie;
+};
+type MovieSearchFormOwnProps = {};
+type MovieSearchProps = MovieSearchFormOwnProps & MovieSearchFormDispatchProps;
+
+const MovieSearchForm: React.FC<MovieSearchProps> = props => {
+  const { pushSearchedMovie } = props;
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState<any>({});
   const [error, setError] = useState<string>();
@@ -33,6 +43,7 @@ const MovieSearchForm: React.FC = () => {
   const handleClick = useCallback(
     (x: any) => {
       console.log('x', x);
+      pushSearchedMovie(x);
     },
     [searchResult],
   );
@@ -101,4 +112,9 @@ const Wrapper = styled.div`
   /* css for table scroll END */
 `;
 
-export default MovieSearchForm;
+const enhance = compose<React.FC<MovieSearchFormOwnProps>>(
+  connect<{}, MovieSearchFormDispatchProps, MovieSearchFormOwnProps, any>(undefined, {
+    pushSearchedMovie: movieListActions.pushSearchedMovie,
+  }),
+);
+export default enhance(MovieSearchForm);

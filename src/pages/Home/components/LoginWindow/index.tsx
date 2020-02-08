@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { Window, WindowHeader, WindowContent, Button } from 'react95';
 import { compose, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import firebase from 'firebase/app';
 
 type LoginProps = {
@@ -27,12 +26,7 @@ const LoginWindow: React.FC<LoginProps> = props => {
         I support the google login only.
         <br />
         <br />
-        <Button
-          style={{ fontWeight: '700' }}
-          {...props}
-          fullWidth={true}
-          onClick={handleClick}
-        >
+        <Button style={{ fontWeight: '700' }} {...props} fullWidth={true} onClick={handleClick}>
           🔑 Login with google
         </Button>
       </WindowContent>
