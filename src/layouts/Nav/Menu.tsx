@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, ListItem, Divider, Button } from 'react95';
+import { List, ListItem, Divider, Button, Avatar } from 'react95';
 import { Icon } from '@react95/core';
 import styled from 'styled-components';
 import { compose } from 'redux';
@@ -59,15 +59,15 @@ const Menu: React.FC<MenuProps> = props => {
         <List horizontalAlign="left" verticalAlign="top" open={open} onClick={handleClose}>
           <ListItem disabled={true}>
             <Icon className="menu-icon" name="user" height={23} width={23} />
-            Profile
+            <span className="menu-text">Profile</span>
           </ListItem>
           <ListItem onClick={() => handleMenu('search')}>
             <Icon className="menu-icon" name="explore" height={23} width={23} />
-            Search
+            <span className="menu-text">Search</span>
           </ListItem>
           <ListItem onClick={() => handleMenu('movie_lists')}>
             <Icon className="menu-icon" name="files" height={23} width={23} />
-            Movie Lists
+            <span className="menu-text">Moive Lists</span>
           </ListItem>
           {/* <ListItem onClick={() => handleMenu('login')}>
             <Icon className="menu-icon" name="dial" height={23} width={23} />
@@ -76,14 +76,15 @@ const Menu: React.FC<MenuProps> = props => {
 
           <Divider />
           {isLoggedIn ? (
-            <ListItem onClick={() => handleMenu('logout')}>
-              <Icon className="menu-icon" name="power_off" height={23} width={23} />
-              Logout
+            <ListItem className="last-li" onClick={() => handleMenu('logout')}>
+              <Avatar square={true} src={user?.photoURL} style={{ display: 'inline-block' }} />
+              {/* <Icon className="menu-icon" name="power_off" height={23} width={23} /> */}
+              <span className="menu-text">Logout</span>
             </ListItem>
           ) : (
-            <ListItem onClick={() => handleMenu('login')}>
+            <ListItem className="last-li" onClick={() => handleMenu('login')}>
               <Icon className="menu-icon" name="power_on" height={23} width={23} />
-              Login
+              <span className="menu-text">Login</span>
             </ListItem>
           )}
         </List>
@@ -121,8 +122,13 @@ const Wrapper = styled.div`
     margin-right: 9px;
   }
 
-  #google_logout_btn_wrapper {
-    display: none;
+  .menu-text {
+    margin-left: 0.4rem;
+    vertical-align: super;
+  }
+
+  .last-li {
+    padding-top: 4px;
   }
 `;
 
