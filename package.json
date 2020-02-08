@@ -32,8 +32,7 @@
     "redux": "^4.0.1",
     "redux-firestore": "^0.11.0",
     "redux-saga": "^1.0.2",
-    "reselect": "^4.0.0",
-    "styled-jsx": "^3.2.1"
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@types/delay": "^3.1.0",
