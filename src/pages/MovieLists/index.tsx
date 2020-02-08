@@ -17,9 +17,8 @@ const MovieLists: React.FC<MovieListsProps> = props => {
   const handleClick = useCallback(
     (menu: string) => {
       switch (menu) {
-        case 'add': {
-          push('/test-auth-page');
-          console.log('add');
+        case 'new': {
+          push('/movie-lists/new');
           break;
         }
         default: {
@@ -45,9 +44,7 @@ const MovieLists: React.FC<MovieListsProps> = props => {
             </h1>
           </div>
           <div className="col">
-            <Button onClick={() => handleClick('add')}>
-              Add new move list
-            </Button>
+            <Button onClick={() => handleClick('new')}>New move list</Button>
           </div>
         </div>
         <div className="row">moive lists here</div>
