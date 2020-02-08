@@ -4,7 +4,7 @@ import { memoize } from 'lodash';
 export type SearchedMovie = {
   Title: string;
   Year: string;
-  imdbId: string;
+  imdbID: string;
   Type: string;
   Poster: string;
 };
