@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { currentMovieListSelector } from 'stores/selectors/movieList';
 import { SearchedMovie } from 'services/omdb';
 
-type MovieListTableOwnProps = {
+type SelectedMovieListOwnProps = {
   currentMovieList: SearchedMovie[];
 };
-type MovieListTableProps = MovieListTableOwnProps;
-const MovieListTable: React.FC<MovieListTableProps> = props => {
+type SelectedMovieListProps = SelectedMovieListOwnProps;
+const SelectedMovieList: React.FC<SelectedMovieListProps> = props => {
   return (
     <Wrapper>
       {props.currentMovieList.length > 0 && (
@@ -27,5 +25,5 @@ const MovieListTable: React.FC<MovieListTableProps> = props => {
 
 const Wrapper = styled.div``;
 
-const enhance = compose<React.FC<MovieListTableOwnProps>>();
-export default enhance(MovieListTable);
+const enhance = compose<React.FC<SelectedMovieListOwnProps>>();
+export default enhance(SelectedMovieList);
