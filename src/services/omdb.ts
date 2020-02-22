@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { memoize } from 'lodash';
+import http from './http';
 
 export type SearchedMovie = {
   Title: string;
@@ -10,5 +10,5 @@ export type SearchedMovie = {
 };
 
 export const searchByTitle = memoize((title: string) => {
-  return axios.get(`http://localhost:3001/search?s=${title}`);
+  return http.get(`http://localhost:3001/search?s=${title}`);
 });
