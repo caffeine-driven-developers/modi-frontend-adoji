@@ -5,7 +5,6 @@ import { Icon } from '@react95/core';
 import { Window, WindowHeader, WindowContent, Button } from 'react95';
 import { withUserAuth } from 'hocs/withAuth';
 import { compose } from 'redux';
-import MovieListTable from './components/MovieListTable';
 import MovieSearchForm from './components/MovieSearchForm';
 import MovieListForm from './components/MovieListForm';
 
